@@ -2,6 +2,7 @@ from Logic.TextFunctions import *
 from Logic.GetInput import *
 from Logic.Game import Game
 from Logic.Settings import Settings
+from Logic.Replay import Replay
 
 
 class MenuBase:
@@ -63,13 +64,15 @@ class MainMenu(MenuBase):
 
     def do(self, what_to_do: str) -> None:
         if what_to_do == 'Start Game':
-            GameMenu()
+            Game()
         elif what_to_do == 'Watch Replay':
-            pass
+            possible_action = Replay().return_value
+            if possible_action['Goto'] == 'Game':
+                Game(**possible_action['Parameters'])
         elif what_to_do == 'Open Settings':
             Settings()
         elif what_to_do == 'Quit Game':
-            self.running = False
+            quit()
         else:
             self.note = 'You have written the unknown command! Try again!'
 
